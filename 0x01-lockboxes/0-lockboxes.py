@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 def canUnlockAll(boxes):
     # We use a set to keep track of the box numbers that we can open
     # We start with box 0, since it is already unlocked
