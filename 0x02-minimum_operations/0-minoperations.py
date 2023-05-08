@@ -9,9 +9,11 @@ def minOperations(n):
     """
     Calculates the fewest number of operations needed to result
     in exactly n H characters in the file.
+    
     Args:
         n (int): The number of H's to be achieved.
     Returns:
+        
         int: The minimum number of operations needed to achieve n H's.
     """
     if n <= 1:
