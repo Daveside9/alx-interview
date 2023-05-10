@@ -10,8 +10,10 @@ contain keys to the other boxes.
 def canUnlockAll(boxes):
     """
     Determine if all the boxes can be opened.
+    
     Args:
         boxes (list): A list of lists containing keys to other boxes.
+    
     Returns:
         bool: True if all boxes can be opened, False otherwise.
     """
