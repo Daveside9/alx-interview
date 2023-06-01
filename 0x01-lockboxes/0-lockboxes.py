@@ -6,7 +6,6 @@ Each box is numbered sequentially from 0 to n - 1 and each box may
 contain keys to the other boxes.
 """
 
-
 def canUnlockAll(boxes):
     """
     Determine if all the boxes can be opened.
