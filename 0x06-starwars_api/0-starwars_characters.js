@@ -1,30 +1,42 @@
 #!/usr/bin/node
-import sys
-import requests
 
-def get_movie_characters(movie_id):
-    url = f"https://swapi.dev/api/films/{movie_id}/"
-    response = requests.get(url)
-    
-    if response.status_code == 200:
-        movie_data = response.json()
-        characters = movie_data['characters']
-        
-        for character_url in characters:
-            character_response = requests.get(character_url)
-            if character_response.status_code == 200:
-                character_data = character_response.json()
-                print(character_data['name'])
-            else:
-                print(f"Failed to fetch character: {character_url}")
-    else:
-        print(f"Failed to fetch movie: {url}")
+// Import the 'util' module from Node.js
+const util = require('util');
+// Use 'util.promisify' to convert the 'request' function into a promise-based function
 
-if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print("Usage: python script_name.py <movie_id>")
-        sys.exit(1)
-    
-    movie_id = sys.argv[1]
-    get_movie_characters(movie_id)
+const request = util.promisify(require('request'));
+// Get the movie ID from the command-line arguments
 
+const filmID = process.argv[2];
+
+// Define an asynchronous function to retrieve and print the characters of a Star Wars movie
+async function starwarsCharacters (filmId) {
+  // Construct the API endpoint URL using the provided movie ID
+  const endpoint = 'https://swapi-api.hbtn.io/api/films/' + filmId;
+
+  // Send a request to the API endpoint and await the response
+  let response = await (await request(endpoint)).body;
+
+  // Parse the response as JSON
+  response = JSON.parse(response);
+
+  // Get the array of characters from the response
+  const characters = response.characters;
+
+  // Iterate over each character URL in the array
+  for (let i = 0; i < characters.length; i++) {
+    const urlCharacter = characters[i];
+
+    // Send a request to the character URL and await the response
+    let character = await (await request(urlCharacter)).body;
+
+    // Parse the response as JSON
+    character = JSON.parse(character);
+
+    // Print the name of the character
+    console.log(character.name);
+  }
+}
+
+// Call the 'starwarsCharacters' function with the provided movie ID
+starwarsCharacters(filmID);
