@@ -1,44 +1,45 @@
 #!/usr/bin/python3
-""" N queens """
 import sys
 
 
-if len(sys.argv) > 2 or len(sys.argv) < 2:
-    print("Usage: nqueens N")
-    exit(1)
-
-if not sys.argv[1].isdigit():
-    print("N must be a number")
-    exit(1)
-
-if int(sys.argv[1]) < 4:
-    print("N must be at least 4")
-    exit(1)
-
-n = int(sys.argv[1])
+def is_safe(board, row, col):
+    # Check if a queen can be placed at board[row][col]
+    for i in range(row):
+        if board[i] == col or board[i] - i == col - row \
+                or board[i] + i == col + row:
+            return False
+    return True
 
 
-def queens(n, i=0, a=[], b=[], c=[]):
-    """ find possible positions """
-    if i < n:
-        for j in range(n):
-            if j not in a and i + j not in b and i - j not in c:
-                yield from queens(n, i + 1, a + [j], b + [i + j], c + [i - j])
-    else:
-        yield a
+def solve_nqueens(board, row, n):
+    # Base case: all queens are placed
+    if row == n:
+        print([[i, board[i]] for i in range(n)])
+        return
+
+    # Try placing the queen in each column of the current row
+    for col in range(n):
+        if is_safe(board, row, col):
+            board[row] = col
+            solve_nqueens(board, row + 1, n)
 
 
-def solve(n):
-    """ solve """
-    k = []
-    i = 0
-    for solution in queens(n, 0):
-        for s in solution:
-            k.append([i, s])
-            i += 1
-        print(k)
-        k = []
-        i = 0
+if __name__ == '__main__':
+    # Validate and parse command-line arguments
+    if len(sys.argv) != 2:
+        print("Usage: nqueens N")
+        sys.exit(1)
 
+    try:
+        n = int(sys.argv[1])
+    except ValueError:
+        print("N must be a number")
+        sys.exit(1)
 
-solve(n)
+    if n < 4:
+        print("N must be at least 4")
+        sys.exit(1)
+
+    # Initialize the board and solve the problem
+    board = [0] * n
+    solve_nqueens(board, 0, n)
