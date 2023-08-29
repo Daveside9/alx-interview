@@ -1,15 +1,15 @@
 #!/usr/bin/python3
-"""Island Perimeter Problem
+"""Island_Perimeter_Problem
 """
 
 
 def island_perimeter(grid):
     """
-    Calculates the perimeter of the island described in grid
+    Calculates_the_perimeter_of_the_island_described_in_grid
     Args:
-        grid: 2d list of integers containing 0(water) or 1(land)
+        grid:_2d_list_of_integers_containing_0(water)_or_1(land)
     Return:
-        the perimeter of the island
+        the_perimeter_of_the_island
     """
 
     p = 0
